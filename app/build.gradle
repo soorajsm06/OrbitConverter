@@ -1,0 +1,32 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'com.orbitconvert.app'
+    compileSdk 35
+    buildToolsVersion '35.0.0'
+    defaultConfig {
+        applicationId 'com.orbitconvert.app'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '0.1.0'
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    testOptions {
+        unitTests.includeAndroidResources = true
+        unitTests.all {
+            systemProperty 'robolectric.dependency.repo.url', 'https://repo.maven.apache.org/maven2'
+            ['https.proxyHost', 'https.proxyPort', 'http.proxyHost', 'http.proxyPort'].each { key ->
+                if (System.getProperty(key)) systemProperty key, System.getProperty(key)
+            }
+        }
+    }
+    buildTypes { release { minifyEnabled false } }
+    packaging { resources { excludes += ['META-INF/DEPENDENCIES'] } }
+}
+dependencies {
+    implementation 'com.tom-roush:pdfbox-android:2.0.27.0'
+    implementation 'androidx.exifinterface:exifinterface:1.3.7'
+    implementation 'androidx.annotation:annotation:1.3.0'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.14.1'
+}
